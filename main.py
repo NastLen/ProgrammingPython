@@ -11,6 +11,20 @@ class user(db.Model):
     lastname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     role = db.Column(db.String(100), nullable=False)
+def add_user():
+    if request.method == 'POST':
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        email = request.form['email']
+        role = request.form['role']
+
+        new_user = User(firstname=firstname, lastname=lastname, email=email, role=role)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect(url_for('index'))
+
+return render_template('add-user.html')
   
 def create_db():
     db.create_all()
